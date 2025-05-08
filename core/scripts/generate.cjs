@@ -43,6 +43,21 @@ const getEndpoint = () => {
   return `https://store-${storeHash}-${channelId}.${graphqlApiDomain}/graphql`;
 };
 
+const getContentfulToken = () => {
+  const token = process.env.CONTENTFUL_ACCESS_TOKEN;
+
+  if (!token) {
+    throw new Error('Missing Contentful token');
+  }
+
+  return token;
+};
+
+const getContentfulEndpoint = () => {
+  const spaceId = process.env.CONTENTFUL_SPACE_ID;
+  return `https://graphql.contentful.com/content/v1/spaces/${spaceId ?? ''}`;
+};
+
 const generate = async () => {
   try {
     await generateSchema({
@@ -51,6 +66,16 @@ const generate = async () => {
       output: join(__dirname, '../bigcommerce.graphql'),
       tsconfig: undefined,
     });
+
+    const contentfulEndpoint = getContentfulEndpoint();
+    if (contentfulEndpoint) {
+      await generateSchema({
+        input: getContentfulEndpoint(),
+        headers: { Authorization: `Bearer ${getContentfulToken()}` },
+        output: join(__dirname, '../contentful.graphql'),
+        tsconfig: undefined,
+      });
+    }
 
     await generateOutput({
       disablePreprocessing: false,
