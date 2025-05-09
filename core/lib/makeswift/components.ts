@@ -15,6 +15,8 @@ import './components/product-detail/register';
 
 import './components/site-theme/register';
 
+import './components/custom/contentful/article.makeswift';
+
 import { MakeswiftComponentType } from '@makeswift/runtime';
 
 import { runtime } from './runtime';
