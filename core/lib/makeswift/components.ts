@@ -16,6 +16,7 @@ import './components/slideshow/register';
 import './components/sticky-sidebar/register';
 
 import './components/custom/contentful/article.makeswift';
+import './components/custom/contentful/articles.makeswift';
 
 import { MakeswiftComponentType } from '@makeswift/runtime';
 

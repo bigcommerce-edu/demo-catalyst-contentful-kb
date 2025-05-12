@@ -3,13 +3,13 @@ import { FragmentOf } from "gql.tada";
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Document } from '@contentful/rich-text-types';
 
-interface ArticleProps {
+interface KbArticleProps {
   article?: FragmentOf<typeof KbArticleFragment> | null;
 }
 
-export function Article({
+export function KbArticle({
   article
-}: ArticleProps) {
+}: KbArticleProps) {
   if (!article) return <div>No article</div>;
 
   return (

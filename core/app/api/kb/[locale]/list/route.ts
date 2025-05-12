@@ -6,6 +6,11 @@ type Params = {
   locale: string;
 };
 
+export interface FetchKbArticlesResponse {
+  status: string;
+  results: Awaited<ReturnType<typeof fetchKbArticles>>;
+}
+
 export const GET = async (
   request: NextRequest, 
   { params }: { params: Promise<Params> }

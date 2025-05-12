@@ -3,6 +3,29 @@ import { contentfulFetch } from "~/lib/contentful/client";
 import { cache } from "react";
 import { revalidate } from "~/client/revalidate-target";
 
+export const KbArticlesItemFragment = contentfulGraphql(`
+  fragment KbArticlesItemFragment on KbArticle {
+    sys {
+        id
+    }
+    title
+    slug
+    publishDate
+    bannerImage {
+        title
+        url
+    }
+    abstract {
+        json
+    }
+    body {
+        json
+    }
+    source
+    tags
+  }
+`);
+
 const KbArticlesQuery = contentfulGraphql(`
   query FetchKbArticles(
     $ids: [String],
@@ -18,28 +41,11 @@ const KbArticlesQuery = contentfulGraphql(`
         order: [title_ASC]
     ) {
         items {
-          sys {
-              id
-          }
-          title
-          slug
-          publishDate
-          bannerImage {
-              title
-              url
-          }
-          abstract {
-              json
-          }
-          body {
-              json
-          }
-          source
-          tags
+          ...KbArticlesItemFragment
         }
     }
   }
-`);
+`, [KbArticlesItemFragment]);
 
 type Variables = VariablesOf<typeof KbArticlesQuery>;
 

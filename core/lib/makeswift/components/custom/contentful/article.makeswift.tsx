@@ -1,5 +1,5 @@
 import { runtime } from '~/lib/makeswift/runtime';
-import { Article } from '~/components/custom/knowledgebase/article';
+import { KbArticle } from '~/components/custom/knowledgebase/article';
 import { Combobox } from '@makeswift/runtime/controls';
 import { z } from 'zod';
 import useSWR from 'swr';
@@ -45,7 +45,7 @@ runtime.registerComponent(
     const article = data?.result;
 
     return (
-      <Article article={article} />
+      <KbArticle article={article} />
     );
   },
   {
