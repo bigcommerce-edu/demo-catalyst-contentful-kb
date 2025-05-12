@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchKbArticles } from './route-data';
+import normalizeLocale from '~/lib/contentful/normalizeLocale';
 
 type Params = {
   locale: string;
@@ -17,7 +18,7 @@ export const GET = async (
 
   const articles = await fetchKbArticles({
     ids,
-    locale,
+    locale: normalizeLocale(locale),
   });
 
   return NextResponse.json({

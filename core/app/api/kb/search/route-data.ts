@@ -6,14 +6,12 @@ import { revalidate } from "~/client/revalidate-target";
 const SearchKbArticlesQuery = contentfulGraphql(`
   query SearchKbArticles(
     $search: String,
-    $locale: String,
     $limit: Int
   ){
     kbArticleCollection(
         where: {
             title_contains: $search
         },
-        locale: $locale,
         order: [title_ASC],
         limit: $limit
     ) {

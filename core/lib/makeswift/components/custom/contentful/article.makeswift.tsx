@@ -4,6 +4,7 @@ import { Combobox } from '@makeswift/runtime/controls';
 import { z } from 'zod';
 import useSWR from 'swr';
 import { FetchKbArticleResponse } from '~/app/api/kb/[locale]/article/[id]/route';
+import { useLocale } from 'next-intl';
 
 const SearchArticlesResponse = z.object({
   status: z.string(),
@@ -20,7 +21,7 @@ interface MSArticleProps {
 }
 
 const search = async (query: string) => {
-  const response = await fetch(`/api/kb/en-US/search?query=${query}`)
+  const response = await fetch(`/api/kb/search?query=${query}`)
     .then(res => res.json())
     .then(SearchArticlesResponse.parse);
 
@@ -31,8 +32,10 @@ runtime.registerComponent(
   ({
     id
   }: MSArticleProps) => {
+    const locale = useLocale();
+
     const { data } = useSWR<FetchKbArticleResponse>(
-      id ? `/api/kb/en-US/article/${id}` : null,
+      id ? `/api/kb/${locale}/article/${id}` : null,
       async (url: string) => {
         return fetch(url)
           .then(res => res.json());
