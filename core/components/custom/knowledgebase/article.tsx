@@ -4,12 +4,14 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Document } from '@contentful/rich-text-types';
 
 interface ArticleProps {
-  article: FragmentOf<typeof KbArticleFragment>;
+  article?: FragmentOf<typeof KbArticleFragment> | null;
 }
 
 export function Article({
   article
 }: ArticleProps) {
+  if (!article) return <div>No article</div>;
+
   return (
     <div>
       <div>ID: {article.sys.id}</div>

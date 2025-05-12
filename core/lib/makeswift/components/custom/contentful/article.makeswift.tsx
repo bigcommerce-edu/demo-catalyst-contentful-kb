@@ -3,8 +3,7 @@ import { Article } from '~/components/custom/knowledgebase/article';
 import { Combobox } from '@makeswift/runtime/controls';
 import { z } from 'zod';
 import useSWR from 'swr';
-import { KbArticleFragment } from '~/app/api/kb/[locale]/article/[id]/route-data';
-import { FragmentOf } from 'gql.tada';
+import { FetchKbArticleResponse } from '~/app/api/kb/[locale]/article/[id]/route';
 
 const SearchArticlesResponse = z.object({
   status: z.string(),
@@ -32,7 +31,7 @@ runtime.registerComponent(
   ({
     id
   }: MSArticleProps) => {
-    const { data, isLoading } = useSWR(
+    const { data } = useSWR<FetchKbArticleResponse>(
       id ? `/api/kb/en-US/article/${id}` : null,
       async (url: string) => {
         return fetch(url)
@@ -40,13 +39,7 @@ runtime.registerComponent(
       },
     );
 
-    if (isLoading) {
-      return (
-        <div>No article</div>
-      );
-    }
-
-    const article = data.result as FragmentOf<typeof KbArticleFragment>;
+    const article = data?.result;
 
     return (
       <Article article={article} />
@@ -62,12 +55,14 @@ runtime.registerComponent(
           const articles = await search(query);
 
           return !articles ? [] : articles.map(article => {
+            if (!article) return null;
+
             return {
               id: article.sys.id,
-              label: article.title,
+              label: article.title ?? '',
               value: article.sys.id,
             };
-          });
+          }).filter(article => article !== null);
         },
       })
     },

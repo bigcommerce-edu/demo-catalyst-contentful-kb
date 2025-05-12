@@ -37,6 +37,6 @@ export const searchKbArticles = cache(
       fetchOptions: { next: { revalidate } },
     });
 
-    return data.kbArticleCollection?.items;
+    return data.kbArticleCollection?.items ?? [];
   },
 );
