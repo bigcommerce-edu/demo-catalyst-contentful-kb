@@ -13,12 +13,13 @@ export function KbArticle({
   if (!article) return <div>No article</div>;
 
   return (
-    <div>
-      <div>ID: {article.sys.id}</div>
-      <div>Title: {article.title}</div>
-      <div className="prose">
+    <section className="w-full">
+      <h2 className="font-heading text-xl text-[hsl(var(--contrast-500))] text-center">
+        {article.title}
+      </h2>
+      <div className="mx-auto prose border border-x-2 border-y-0 border-[hsl(var(--primary))] p-4">
         {documentToReactComponents(article.body?.json as Document)}
       </div>
-    </div>
+    </section>
   );
 }
