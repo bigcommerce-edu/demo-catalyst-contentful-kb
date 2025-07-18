@@ -1,7 +1,6 @@
+import { contentfulClient } from "~/lib/contentful/client";
 import { contentfulGraphql, VariablesOf } from "~/lib/contentful/client/graphql";
-import { contentfulFetch } from "~/lib/contentful/client";
 import { cache } from "react";
-import { revalidate } from "~/client/revalidate-target";
 
 const SearchKbArticlesQuery = contentfulGraphql(`
   query SearchKbArticles(
@@ -29,12 +28,8 @@ type Variables = VariablesOf<typeof SearchKbArticlesQuery>;
 
 export const searchKbArticles = cache(
   async (variables: Variables) => {
-    const { data } = await contentfulFetch({
-      document: SearchKbArticlesQuery,
-      variables,
-      fetchOptions: { next: { revalidate } },
-    });
+    const { data } = await contentfulClient.query(SearchKbArticlesQuery, variables);
 
-    return data.kbArticleCollection?.items ?? [];
+    return data?.kbArticleCollection?.items ?? [];
   },
 );
