@@ -1,23 +1,23 @@
-import { KbArticleFragment } from "~/app/[locale]/(default)/kb/[slug]/page-data";
+import { KbAbstractFragment } from "~/app/api/kb/[locale]/article/[id]/route-data";
 import { FragmentOf } from "gql.tada";
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Document } from '@contentful/rich-text-types';
 import Image from "next/image";
 
 interface KbArticleProps {
-  article?: FragmentOf<typeof KbArticleFragment> | null;
+  article?: FragmentOf<typeof KbAbstractFragment> | null;
 }
 
-export function KbArticle({
+export function KbArticleAbstract({
   article
 }: KbArticleProps) {
   if (!article) return <div>No article</div>;
 
   return (
     <section className="w-full">
-      <h1 className="font-heading text-xl text-[hsl(var(--contrast-500))] text-center">
+      <h2 className="font-heading text-xl text-[hsl(var(--contrast-500))] text-center">
         {article.title}
-      </h1>
+      </h2>
       <div className="mx-auto prose border border-x-2 border-y-0 border-[hsl(var(--primary))] p-4">
         {article.bannerImage?.url && (
           <Image
@@ -28,7 +28,7 @@ export function KbArticle({
           />
         )}
         <div>
-          {documentToReactComponents(article.body?.json as Document)}
+          {documentToReactComponents(article.abstract?.json as Document)}
         </div>
       </div>
     </section>

@@ -2,8 +2,6 @@ import { clsx } from 'clsx';
 
 import { KbArticlesItemFragment } from "~/app/api/kb/[locale]/list/route-data";
 import { FragmentOf } from "gql.tada";
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { Document } from '@contentful/rich-text-types';
 import { Card } from '@/vibes/soul/primitives/card';
 
 interface KbArticlesProps {
@@ -21,6 +19,10 @@ export function KbArticles({
           key={article.sys.id}
           title={article.title ?? ''}
           href=""
+          image={article.bannerImage?.url 
+            ? { src: article.bannerImage.url, alt: article.bannerImage.title ?? '' } 
+            : undefined
+          }
         />
       ))}
       </div>

@@ -2,7 +2,7 @@ import { contentfulClient } from "~/lib/contentful/client";
 import { contentfulGraphql, VariablesOf } from "~/lib/contentful/client/graphql";
 import { cache } from "react";
 
-export const KbArticleFragment = contentfulGraphql(`
+export const KbAbstractFragment = contentfulGraphql(`
   fragment ArticleFragment on KbArticle {
       sys {
         id
@@ -15,9 +15,6 @@ export const KbArticleFragment = contentfulGraphql(`
         url
       }
       abstract {
-        json
-      }
-      body {
         json
       }
       source
@@ -37,11 +34,11 @@ const KbArticleQuery = contentfulGraphql(`
       ...ArticleFragment
     }
   }
-`, [KbArticleFragment]);
+`, [KbAbstractFragment]);
 
 type Variables = VariablesOf<typeof KbArticleQuery>;
 
-export const fetchKbArticle = cache(
+export const fetchKbArticleAbstract = cache(
   async (variables: Variables) => {
     const { data } = await contentfulClient.query(KbArticleQuery, variables);
 

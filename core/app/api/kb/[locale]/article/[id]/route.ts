@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchKbArticle } from './route-data';
+import { fetchKbArticleAbstract } from './route-data';
 import normalizeLocale from '~/lib/contentful/normalizeLocale';
 
 type Params = {
@@ -7,18 +7,18 @@ type Params = {
   locale: string;
 };
 
-export interface FetchKbArticleResponse {
+export interface FetchKbArticleAbstractResponse {
   status: string;
-  result: Awaited<ReturnType<typeof fetchKbArticle>>;
+  result: Awaited<ReturnType<typeof fetchKbArticleAbstract>>;
 }
 
 export const GET = async (
   request: NextRequest, 
   { params }: { params: Promise<Params> }
-): Promise<NextResponse<FetchKbArticleResponse>> => {
+): Promise<NextResponse<FetchKbArticleAbstractResponse>> => {
   const { id, locale } = await params;
 
-  const article = await fetchKbArticle({
+  const article = await fetchKbArticleAbstract({
     id,
     locale: normalizeLocale(locale),
   });

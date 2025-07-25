@@ -14,12 +14,6 @@ export const KbArticlesItemFragment = contentfulGraphql(`
         title
         url
     }
-    abstract {
-        json
-    }
-    body {
-        json
-    }
     source
     tags
   }

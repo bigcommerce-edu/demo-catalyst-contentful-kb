@@ -68,6 +68,9 @@ export default async (): Promise<NextConfig> => {
       optimizePackageImports: ['@icons-pack/react-simple-icons'],
       ppr: 'incremental',
     },
+    images: {
+      remotePatterns: [new URL('https://images.ctfassets.net/**')],
+    },
     typescript: {
       ignoreBuildErrors: !!process.env.CI,
     },
