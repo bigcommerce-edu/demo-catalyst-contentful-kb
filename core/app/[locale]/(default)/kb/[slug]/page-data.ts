@@ -8,9 +8,6 @@ export const KbArticleShortFragment = contentfulGraphql(`
         id
       }
       title
-      abstract {
-        json
-      }
   }
 `);
 

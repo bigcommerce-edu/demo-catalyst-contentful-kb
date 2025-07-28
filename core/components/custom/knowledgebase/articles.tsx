@@ -18,7 +18,7 @@ export function KbArticles({
         <Card
           key={article.sys.id}
           title={article.title ?? ''}
-          href=""
+          href={`/kb/${article.slug}`}
           image={article.bannerImage?.url 
             ? { src: article.bannerImage.url, alt: article.bannerImage.title ?? '' } 
             : undefined
